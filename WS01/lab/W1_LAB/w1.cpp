@@ -31,7 +31,8 @@ extern const int INITIAL = 3;
 			for (int i = 0; i < argCount; i++) {
 				cout << args[i] << ' ';
 			}
-			for (int i = 0; i < argCount; i++) {
+			cout << endl;
+			for (int i = 1; i < argCount; i++) {
 				sict::process(args[i]);
 			}
 		}
