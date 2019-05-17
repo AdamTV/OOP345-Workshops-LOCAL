@@ -19,7 +19,7 @@
 #include <iostream>
 #include "process.h"
 
-int INITIAL = 3;
+extern const int INITIAL = 3;
 
 	using namespace std;
 
@@ -30,6 +30,8 @@ int INITIAL = 3;
 		if (argCount > 0) {
 			for (int i = 0; i < argCount; i++) {
 				cout << args[i] << ' ';
+			}
+			for (int i = 0; i < argCount; i++) {
 				sict::process(args[i]);
 			}
 		}

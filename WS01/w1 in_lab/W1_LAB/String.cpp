@@ -21,7 +21,8 @@
 #include <cstring>
 #include "String.h"
 
-extern int INITIAL;
+extern const int INITIAL;
+int initial = INITIAL;
 
 namespace sict {
 
@@ -29,6 +30,7 @@ namespace sict {
 	{
 		if (string_n != nullptr) {
 			strncpy(string, string_n, MAX);
+			string[MAX] = '\0';
 		}
 		else {
 			string[0] = '\0';
@@ -40,7 +42,7 @@ namespace sict {
 	}
 	std::ostream& operator<<(std::ostream& o, String& source)
 	{
-		int initial = INITIAL;
+		
 		o << initial++ << ": ";
 		source.display(o);
 		return o;
