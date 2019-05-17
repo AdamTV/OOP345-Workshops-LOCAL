@@ -1,0 +1,14 @@
+In line number 5 of your output:
+The output should be:
+Command Line : w1 oop345 btp305 
+^
+But your output is: 
+w1 oop345 btp305 
+^
+
+Unmatched character details:
+The character in column 1 is supposed to be:
+  [C] ASCII code(67)
+but you printed
+  [w] ASCII code(119)
+
