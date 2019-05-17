@@ -28,6 +28,7 @@ extern const int INITIAL = 3;
 		int control = 0;
 
 		if (argCount > 0) {
+			cout << "Command Line : ";
 			for (int i = 0; i < argCount; i++) {
 				cout << args[i] << ' ';
 			}
