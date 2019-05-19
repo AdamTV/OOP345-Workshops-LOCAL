@@ -9,7 +9,7 @@
  Course Code : OOP345
  Section     : SCC
  Date        : 2019-05-15
- Workshop    : Workshop 1 - Lab
+ Workshop    : Workshop 1 - Home
  ============================================================================
  */
 
