@@ -20,34 +20,41 @@
 #include <iostream>
 #include "Timekeeper.h"
 
-sict::Timekeeper::Timekeeper()
-{
-	stored = 0;
-}
-
-void sict::Timekeeper::start()
-{
-	begin = std::chrono::steady_clock::now();
-}
-
-void sict::Timekeeper::stop()
-{
-	end = std::chrono::steady_clock::now();
-}
-
-void sict::Timekeeper::recordEvent(const char* message_n)
-{
-	if (stored < MAX_RECORDS) {
-		record[stored].message = message_n;
-		record[stored].duration = end - begin;
-		stored++;
+namespace sict {
+	//Default, no-argument constructor
+	sict::Timekeeper::Timekeeper()
+	{
+		stored = 0;
 	}
-}
-	
-void sict::Timekeeper::report(std::ostream& o) const
-{
-	using namespace std::chrono;
-	o << "Execution Times:\n";
-	for (int i = 0; i < stored; i++)
-		o << record[i].message << std::setw(6) << duration_cast <milliseconds>(record[i].duration).count() << " " << record[i].timeUnits << std::endl;
+
+	//Start function to begin timing
+	void sict::Timekeeper::start()
+	{
+		begin = std::chrono::steady_clock::now();
+	}
+
+	//Stop function to end timing
+	void sict::Timekeeper::stop()
+	{
+		end = std::chrono::steady_clock::now();
+	}
+
+	//Function to save the record of an event
+	void sict::Timekeeper::recordEvent(const char* message_n)
+	{
+		if (stored < MAX_RECORDS) {
+			record[stored].message = message_n;
+			record[stored].duration = end - begin;
+			stored++;
+		}
+	}
+
+	//Function to display report of events
+	void sict::Timekeeper::report(std::ostream& o) const
+	{
+		using namespace std::chrono;
+		o << "Execution Times:\n";
+		for (int i = 0; i < stored; i++)
+			o << record[i].message << std::setw(6) << duration_cast <milliseconds>(record[i].duration).count() << " " << record[i].timeUnits << std::endl;
+	}
 }

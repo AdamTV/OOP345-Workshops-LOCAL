@@ -21,12 +21,15 @@
 #include "Text.h"
 
 namespace sict {
+
+	//Default, no-arg ctor
 	Text::Text()
 	{
 		stored = 0;
 		strings = nullptr;
 	}
 
+	//1-arg ctor
 	Text::Text(char* name)
 	{
 		*this = Text();
@@ -46,12 +49,14 @@ namespace sict {
 		}
 	}
 
+	//Copy ctor (calls assignment operator)
 	Text::Text(const Text& src)
 	{
 		*this = Text();
 		*this = src;
 	}
 
+	//Copy assignment operator for Text class
 	Text& Text::operator=(const Text& src)
 	{
 		if (this != &src) {
@@ -65,12 +70,14 @@ namespace sict {
 		return *this;
 	}
 
+	//Destructor: clean up that garbage!
 	Text::~Text()
 	{
 		delete[] strings;
 		strings = nullptr;
 	}
 
+	//Query to determine number of strings stored
 	size_t Text::size() const
 	{
 		return stored;
