@@ -6,8 +6,8 @@
  Student #   : 124521188
  Course Code : OOP345
  Section     : SCC
- Date        : 2019-05-20
- Workshop    : Workshop 2 - Lab
+ Date        : 2019-05-24
+ Workshop    : Workshop 2 - Home
  ============================================================================
  */
 
@@ -25,7 +25,7 @@ namespace sict {
 	//Default, no-arg ctor
 	Text::Text()
 	{
-		stored = 0;
+		strings_stored = 0;
 		strings = nullptr;
 	}
 
@@ -35,14 +35,14 @@ namespace sict {
 		*this = Text();
 		std::ifstream input(name);
 		if (input) {
-			stored--;
+			strings_stored--;
 			while (input.good()) {
 				std::string tmp;
 				std::getline(input, tmp, '\n');
-				stored++;
+				strings_stored++;
 			}
-			strings = new std::string[stored];
-			for (int i = 0; i < stored; i++) {
+			strings = new std::string[strings_stored];
+			for (int i = 0; i < strings_stored; i++) {
 				std::string tmp;
 				std::getline(input, tmp, '\n');
 				strings[i] = tmp;
@@ -61,11 +61,11 @@ namespace sict {
 	Text& Text::operator=(const Text& src)
 	{
 		if (this != &src) {
-			stored = src.stored;
-			if (stored > 0)
+			strings_stored = src.strings_stored;
+			if (strings_stored > 0)
 				delete[] strings;
-			strings = new std::string[stored];
-			for (int i = 0; i < stored; i++)
+			strings = new std::string[strings_stored];
+			for (int i = 0; i < strings_stored; i++)
 				strings[i] = src.strings[i];
 		}
 		return *this;
@@ -81,6 +81,6 @@ namespace sict {
 	//Query to determine number of strings stored
 	size_t Text::size() const
 	{
-		return stored;
+		return strings_stored;
 	}
 }
