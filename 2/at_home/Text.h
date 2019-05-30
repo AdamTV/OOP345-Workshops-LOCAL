@@ -29,6 +29,8 @@ namespace sict {
 		Text(char* name);
 		Text (const Text& src);
 		Text& operator=(const Text& src);
+		Text(Text&& src);
+		Text& operator=(Text&&);
 		~Text();
 		size_t size() const;
 	};

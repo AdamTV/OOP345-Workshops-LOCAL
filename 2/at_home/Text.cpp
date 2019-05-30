@@ -71,6 +71,24 @@ namespace sict {
 		return *this;
 	}
 
+	Text::Text(Text&& src)
+	{
+		*this = std::move(src);
+	}
+
+	Text& Text::operator=(Text&& src)
+	{
+		if (this != &src) {
+			if(strings_stored > 0)
+			delete[] strings;
+			strings = src.strings;
+			strings_stored = src.strings_stored;
+			src.strings = nullptr;
+			src.strings_stored = 0;
+		}
+		return *this;
+	}
+
 	//Destructor: clean up that garbage!
 	Text::~Text()
 	{
