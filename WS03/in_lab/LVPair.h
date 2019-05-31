@@ -21,8 +21,11 @@
 #include <iostream>
 
 namespace sict {
+	//Class template header
 	template <typename L, typename V>
+	//Class template body
 	class LVPair {
+		//Class template variables
 		L currentLabel;
 		V currentValue;
 	public:
@@ -33,8 +36,9 @@ namespace sict {
 		//display Label value pair using any ostream
 		void display(std::ostream& os) const { os << currentLabel << " : " << currentValue << std::endl; }
 	};
-	// overloaded extraction operator to display label-value pair
+	//Class template header redeclared for helper function
 	template<typename L, typename V>
+	//Overloaded extraction operator to display label-value pair
 	std::ostream& operator<<(std::ostream& os, const LVPair<L, V>& pair) { pair.display(os); return os; }
 }
 #endif // !SICT_LVPAIR_H

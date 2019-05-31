@@ -20,8 +20,9 @@
  */
 
 namespace sict {
-	
+	//Class template header
 	template <typename T, size_t N>
+	//Class template body
 	class List {
 		T a [N];
 		//Initialize listSize to 0 to start at beggining of array
@@ -31,11 +32,11 @@ namespace sict {
 		size_t size() const {
 			return listSize;
 		}
-		//subscript operator to make values in array accessible
+		//Subscript operator to make values in array accessible
 		const T& operator[](size_t i) const {
 			return a[i];
 		}
-		//overloaded += operator to add an element to the array if there is room
+		//Overloaded += operator to add an element to the array if there is room
 		void operator+=(const T& t) {
 			if (listSize < N) {
 				a[listSize] = t;
