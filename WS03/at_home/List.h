@@ -18,6 +18,7 @@
   Description : List class template definition
   ============================================================================
  */
+#include "LVPair.h"
 
 namespace sict {
 	//Class template header
@@ -46,8 +47,23 @@ namespace sict {
 	};
 	//Class template header
 	template <typename T, typename L, class V, size_t N>
-	class LVList : public List {
-		V accumulate(const L& label) const{}
+	class LVList : public List<T,N> {
+	public:
+		V accumulate(const L& label) const
+		{
+			// Initialize the accumulator to the initial value for objects of the label-value pair
+			SummableLVPair<L, V> currentSummable;
+			V sumOfElementsInCurrentLVList = currentSummable.getInitialValue();
+
+			for (size_t i = 0; i < ((List<T, N>&) * this).size(); ++i)
+			{
+				// If the labels match, append the values
+				if (label == ((List<T, N>&) * this)[i].getLabel())
+					sumOfElementsInCurrentLVList = ((List<T, N>&) * this)[i].sum(label, sumOfElementsInCurrentLVList);
+			}
+
+			return sumOfElementsInCurrentLVList;
+		}
 	};
 }
 #endif // !SICT_LIST_H

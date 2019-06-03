@@ -21,21 +21,29 @@
 #include <iostream>
 #include <iomanip>
 
+
 namespace sict {
 	//Class template header
 	template <typename L, typename V>
 	//Class template body
 	class LVPair {
-		//Class template variables
+
+		//Class template variable
 		L currentLabel;
 		V currentValue;
 	public:
+
 		//No argument constructor to set safe empty state
 		LVPair() : currentLabel{}, currentValue{} {}
+
 		//Constructor to set LVPair values
 		LVPair(const L& label, const V& value): currentLabel(label), currentValue(value) {}
+
 		//display Label value pair using any ostream
 		virtual void display(std::ostream& os) const { os << currentLabel << " : " << currentValue << std::endl; }
+
+		const L& getLabel{ return currentLabel; }
+
 	};
 	//Class template header redeclared for helper function
 	template<typename L, typename V>
@@ -44,15 +52,15 @@ namespace sict {
 
 	//Class template header
 	template <typename L, typename V>
-	class SummableLVPair : public LVPair {
+	class SummableLVPair : public LVPair<L,V> {
 		static V initial;
 		static size_t minWidth;
 	public:
-		SummableLVPair() : initial{}, minWidth{} {}
-		SummableLVPair(const L& label, const V& v) : LVPair(label, v) { if (label.size() > minWidth) minWidth = label.size(); }
+		SummableLVPair() {}
+		SummableLVPair(const L& label, const V& v) : LVPair<L,V>(label, v) { if (label.size() > minWidth) minWidth = label.size(); }
 		static const V& getInitialValue() { return initial; }
 		V sum(const L& label, const V& sum) const { V theSum = initial + sum; return theSum; }
-		void display(std::ostream& os) const { os << std::left << std::setw(minWidth); LVPair::display(os); }
+		void display(std::ostream& os) const { os << std::left << std::setw(minWidth); LVPair<L,V>::display(os); }
 	};
 }
 #endif // !SICT_LVPAIR_H

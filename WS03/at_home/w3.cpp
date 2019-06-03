@@ -9,6 +9,8 @@
 #include <string>
 #include "LVPair.h"
 #include "List.h"
+
+
 using namespace sict;
 
 int main(int argc, char* argv[]) {
@@ -30,8 +32,9 @@ int main(int argc, char* argv[]) {
 	// each LVPair consists of a label of type std::string and a value of type std::string
 	// the maximum number of elements in the list is 50
 	//
+	//LVList<SummableLVPair<std::string, std::string>, SummableLVPair<std::string, std::string>, 
+		//SummableLVPair<std::string, std::string>, 50> references;
 	LVList<SummableLVPair<std::string, std::string>, std::string, std::string, 50> references;
-
 	std::ifstream index(argv[1]);
 	if (!index) {
 		std::cerr << "*** failed to open index file ***\n";
@@ -46,7 +49,8 @@ int main(int argc, char* argv[]) {
 			// TODO: create a temporary SummableLVPair from ticketType and number
 			// add the tempoary object to the references list
 			//
-			references +=
+			SummableLVPair<std::string, std::string> tmp(label, reference);
+			references += tmp;
 		}
 	} while (index);
 	index.clear();
@@ -65,6 +69,7 @@ int main(int argc, char* argv[]) {
 	// each LVPair consists of a label of type std::string and a value of type int
 	// the maximum number of elements in the list is 50
 	//
+	LVList < SummableLVPair<std::string, int>, std::string, int, 50> ticketSales;
 	std::ifstream sales(argv[2]);
 	if (!sales) {
 		std::cerr << "*** failed to open sales file ***\n";
@@ -80,7 +85,8 @@ int main(int argc, char* argv[]) {
 			// TODO: create a temporary SummableLVPair from ticketType and number
 			// add the tempoary object to the ticketSales list
 			//
-			ticketSales +=
+			SummableLVPair<std::string, int> tmp(ticketType, number);
+			ticketSales += tmp;
 		}
 	} while (sales);
 	sales.clear();
