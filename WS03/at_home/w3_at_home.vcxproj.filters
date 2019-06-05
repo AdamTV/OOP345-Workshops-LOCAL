@@ -15,6 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Sales.txt" />
+    <Text Include="References.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -26,9 +30,5 @@
     <ClCompile Include="w3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Sales.txt" />
-    <Text Include="References.txt" />
   </ItemGroup>
 </Project>

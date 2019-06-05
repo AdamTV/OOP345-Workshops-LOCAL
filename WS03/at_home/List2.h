@@ -1,5 +1,5 @@
-#ifndef _SICT_LIST_H
-#define _SICT_LIST_H
+#ifndef SICT_LIST_H
+#define SICT_LIST_H
 /*
  ============================================================================
  Name        : List.h
@@ -15,52 +15,55 @@
 
  /*
   ============================================================================
-  Description : List / LVList class template definition
+  Description : List class template definition
   ============================================================================
  */
+
 namespace sict {
 	//Class template header
-	template <class T, int N>
+	template <typename T, size_t N>
 	//Class template body
 	class List {
-		//Class template variables
-		T list[N];
+		T a [N];
 		//Initialize listSize to 0 to start at beggining of array
-		size_t listSize = {0u};
+		size_t listSize = 0;
 	public:
 		//Returns the current size of the array
-		size_t size() const {return listSize;}
+		size_t size() const {
+			return listSize;
+		}
 		//Subscript operator to make values in array accessible
-		const T& operator[](size_t i) const{
-			const T& t = list[i];
-			return t;
+		const T& operator[](size_t i) const {
+			return a[i];
 		}
 		//Overloaded += operator to add an element to the array if there is room
-		void operator+=(const T& t){
-			if (listSize < N){
-				list[listSize] = t;
+		void operator+=(const T& t) {
+			if (listSize < N) {
+				a[listSize] = t;
 				listSize++;
 			}
 		}
 	};
 	//Class template header
-	template<typename T, typename L, typename V, int N>
-	//Class template body
-	class LVList : public List<T, N>{
+	template <typename T, typename L, class V, size_t N>
+	class LVList : public List<T,N> {
 	public:
-		//Accumulate all of the values of all of the elements in the current object
-		V accumulate(const L& label) const {
+		V accumulate(const L& label) const
+		{
 			// Initialize the accumulator to the initial value for objects of the label-value pair
-			SummableLVPair<L,V> currentSummable;
+			SummableLVPair<L, V> currentSummable;
 			V sumOfCurrentLVList = currentSummable.getInitialValue();
-			for (size_t i = 0; i < ((List<T, N>&)*this).size(); ++i) {
+
+			for (size_t i = 0; i < ((List<T, N>&) * this).size(); ++i)
+			{
 				// If the labels match, append the values
-				if (label == ((List<T, N>&)*this)[i].getLabel())
-					sumOfCurrentLVList = ((List<T, N>&)*this)[i].sum(label, sumOfCurrentLVList);
+				if (label == ((List<T, N>&) * this)[i].getLabel())
+					sumOfCurrentLVList = ((List<T, N>&) * this)[i].sum(label, sumOfCurrentLVList);
 			}
+
 			return sumOfCurrentLVList;
 		}
 	};
 }
+#endif // !SICT_LIST_H
 
-#endif // !_SICT_LIST_H

@@ -140,15 +140,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="References.txt" />
+    <Text Include="Sales.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="List.h" />
     <ClInclude Include="LVPair.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="w3.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="References.txt" />
-    <Text Include="Sales.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

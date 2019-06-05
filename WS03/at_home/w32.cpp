@@ -9,19 +9,16 @@
 #include <string>
 #include "LVPair.h"
 #include "List.h"
-
-
-
 using namespace sict;
 
-// Declared minFieldWidth as static
+// Declared m_minFieldWidth as static
 template<typename L, typename V>
-size_t SummableLVPair<L, V>::minFieldWidth{ 0u };
+size_t SummableLVPair<L,V>::m_minFieldWidth { 0u };
 
 // Explicit specialization of LVList<std::string, std::string>
-template<> std::string SummableLVPair<std::string, std::string>::initial = "";
+template<> std::string SummableLVPair<std::string, std::string>::m_initialValueForSummation = "";
 // Explicit specialization of LVList<std::string, int>
-template<> int SummableLVPair<std::string, int>::initial = 0;
+template<> int SummableLVPair<std::string, int>::m_initialValueForSummation = 0;
 
 int main(int argc, char* argv[]) {
 	std::cout << "Command Line : ";
@@ -38,13 +35,8 @@ int main(int argc, char* argv[]) {
 		return 2;
 	}
 
-	// TODO: create a list of summable LVPairs named references
-	// each LVPair consists of a label of type std::string and a value of type std::string
-	// the maximum number of elements in the list is 50
-	//
-	//LVList<SummableLVPair<std::string, std::string>, SummableLVPair<std::string, std::string>, 
-		//SummableLVPair<std::string, std::string>, 50> references;
 	LVList<SummableLVPair<std::string, std::string>, std::string, std::string, 50> references;
+
 	std::ifstream index(argv[1]);
 	if (!index) {
 		std::cerr << "*** failed to open index file ***\n";
@@ -59,8 +51,7 @@ int main(int argc, char* argv[]) {
 			// TODO: create a temporary SummableLVPair from ticketType and number
 			// add the tempoary object to the references list
 			//
-			SummableLVPair<std::string, std::string> tmp(label, reference);
-			references += tmp;
+			references += SummableLVPair<std::string, std::string>(label, reference);
 		}
 	} while (index);
 	index.clear();
@@ -79,7 +70,7 @@ int main(int argc, char* argv[]) {
 	// each LVPair consists of a label of type std::string and a value of type int
 	// the maximum number of elements in the list is 50
 	//
-	LVList < SummableLVPair<std::string, int>, std::string, int, 50> ticketSales;
+	LVList<SummableLVPair<std::string, int>, std::string, int, 50> ticketSales;
 	std::ifstream sales(argv[2]);
 	if (!sales) {
 		std::cerr << "*** failed to open sales file ***\n";
@@ -95,8 +86,7 @@ int main(int argc, char* argv[]) {
 			// TODO: create a temporary SummableLVPair from ticketType and number
 			// add the tempoary object to the ticketSales list
 			//
-			SummableLVPair<std::string, int> tmp(ticketType, number);
-			ticketSales += tmp;
+			ticketSales += SummableLVPair<std::string, int>(ticketType, number);
 		}
 	} while (sales);
 	sales.clear();

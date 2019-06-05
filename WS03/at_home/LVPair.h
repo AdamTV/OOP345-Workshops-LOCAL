@@ -1,5 +1,5 @@
-#ifndef SICT_LVPAIR_H
-#define SICT_LVPAIR_H
+#ifndef _SICT_LVPAIR_H
+#define _SICT_LVPAIR_H
 /*
  ============================================================================
  Name        : LVPair.h
@@ -15,53 +15,66 @@
 
  /*
   ============================================================================
-  Description : LVPair class template definition
+  Description : LVPair / SummableLVPair class template definition
   ============================================================================
  */
 #include <iostream>
 #include <iomanip>
-
+#include <string>
 
 namespace sict {
 	//Class template header
 	template <typename L, typename V>
 	//Class template body
 	class LVPair {
-
-		//Class template variable
+		//Class template variables
 		L currentLabel;
 		V currentValue;
 	public:
-
 		//No argument constructor to set safe empty state
 		LVPair() : currentLabel{}, currentValue{} {}
-
 		//Constructor to set LVPair values
-		LVPair(const L& label, const V& value): currentLabel(label), currentValue(value) {}
-
+		LVPair(const L& label, const V& value) : currentLabel(label), currentValue(value) {}
+		//Public query to get value of label
+		const L& getLabel() const { return currentLabel; }
+		//Public query to get value of value
+		const V& getValue() const { return currentValue; }
 		//display Label value pair using any ostream
 		virtual void display(std::ostream& os) const { os << currentLabel << " : " << currentValue << std::endl; }
-
-		const L& getLabel{ return currentLabel; }
-
 	};
 	//Class template header redeclared for helper function
-	template<typename L, typename V>
-	//Overloaded extraction operator to display label-value pair
+	template <typename L, typename V>
 	std::ostream& operator<<(std::ostream& os, const LVPair<L, V>& pair) { pair.display(os); return os; }
-
 	//Class template header
 	template <typename L, typename V>
-	class SummableLVPair : public LVPair<L,V> {
+	//Class template body
+	class SummableLVPair : public LVPair<L, V> {
+		//Class template variables
 		static V initial;
-		static size_t minWidth;
+		static size_t minFieldWidth;
 	public:
-		SummableLVPair() {}
-		SummableLVPair(const L& label, const V& v) : LVPair<L,V>(label, v) { if (label.size() > minWidth) minWidth = label.size(); }
+		//No arg constructor
+		SummableLVPair() { }
+		//Constructor to set label, value and width
+		SummableLVPair(const L& label, const V& v) : LVPair<L, V>(label, v) {
+			if (minFieldWidth < label.size())
+				minFieldWidth = label.size() + 1;
+		}
+		//Class function to access class variable
 		static const V& getInitialValue() { return initial; }
-		V sum(const L& label, const V& sum) const { V theSum = initial + sum; return theSum; }
-		void display(std::ostream& os) const { os << std::left << std::setw(minWidth); LVPair<L,V>::display(os); }
+		//Accumulate sum of current object value and given sum on type V
+		V sum(const L& label, const V& sum) const { return LVPair<L, V>::getValue() + sum; }
+		//Display label concatenated with width
+		void display(std::ostream& os) const {
+			os << std::left << std::setw(minFieldWidth) << LVPair<L, V>::getLabel() << ": " << LVPair<L, V>::getValue() << std::endl;
+			os.unsetf(std::ios::left);
+		}
 	};
+	//Template specialization of the sum() query for LVPair<std::string, std::string> types
+	template<>
+	std::string SummableLVPair<std::string, std::string>::sum(const std::string& label, const std::string& value) const {
+		return (value + " " + LVPair<std::string, std::string>::getValue());
+	}
 }
-#endif // !SICT_LVPAIR_H
+#endif // !_SICT_LVPAIR_H
 
