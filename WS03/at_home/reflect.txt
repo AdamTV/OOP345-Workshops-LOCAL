@@ -1,0 +1,76 @@
+
+ ============================================================================
+ Name        : reflect.txt
+ Author      : Adam Stinziani
+ Email       : astinziani@myseneca.ca
+ Student #   : 124 521 188
+ Course Code : OOP345
+ Section     : SCC
+ Date        : 2019-06-06
+ Workshop    : Workshop 3 - Reflection
+ ============================================================================
+ ============================================================================
+ What I have learned:
+ ============================================================================
+ Q1: The reason for specializing the sum() member function.
+ Answer: The reason for specializing the sum() member function is to define an
+ exception to the template definition. In this example:
+ template<>
+	std::string SummableLVPair<std::string, std::string>::sum(const std::string&
+  label, const std::string& value) const {
+		return (value + " " + LVPair<std::string, std::string>::getValue());
+	}
+  The arguments to be passed in here are std::strings, as is the return type
+  so anytime the sum() member function is called on a SummableLVPair object
+  with 2 strings as arguments, the output will be properly formatted.
+ ============================================================================
+ Q2: The reason for specializing the initial value for a summation.
+ Answer:
+ As per:
+ https://docs.microsoft.com/en-us/cpp/error-messages/compiler-errors-2/compiler-error-c2864?f1url=https%3A%2F%2Fmsdn.microsoft.com%2Fquery%2Fdev15.query%3FappId%3DDev15IDEF1%26l%3DEN-US%26k%3Dk(C2864)%26rd%3Dtrue%26f%3D255%26MSPPError%3D-2147217396&view=vs-2019
+ A static data member with an in-class initializer must have non-volatile const
+ integral type. If it is not such, we must use a member-definition statement.
+ In the case of a template a specialized declaration must be used.
+ template<> int SummableLVPair<std::string, int>::initial = 0;
+ The scope resolution operator indicates that initial is a member of
+ SummableLVPair and int indicates it is of type int.
+ ============================================================================
+ Q3: The reason for defining the class variable outside the class definition.
+ Answer: We must. Unless the class variable is defined as a non-volatile const
+ and int, we cannot use an in-class definition. Instead we must use a member-
+ definition statement. Trying to define a static variable in-class results in
+ the following compiler error:
+Error	C2864	 'sict::SummableLVPair<L,V>::minFieldWidth':
+a static data member with an in-class initializer must have non-volatile const
+integral type or be specified as 'inline'.
+ ============================================================================
+ Q4: The reason for specializing min Field width.
+ Answer:
+ Similar to question 2, static data member with an in-class initializer must
+ have non-volatile const integral type. If it is not such, we must use a
+ member-definition statement. In the case of a template a specialized
+ declaration must be used.
+ template<typename L, typename V>
+ size_t SummableLVPair<L, V>::minFieldWidth{ 0u };
+ The scope resolution operator indicates that minFieldWidth is a member of
+ SummableLVPair and size_t indicated it is of type size_t.
+ ============================================================================
+ QUIZ REFLECTION
+ ============================================================================
+ QUESTION 4: What is the output of the following program?
+ int* a = nullptr;
+if ( 6 == a[i] && nullptr == a ) // ERROR - Wrong Order
+    std::cout << "a[" << i << "] is " << a[i] << std::endl;
+else
+    std::cout << "Memory not allocated!" << std::endl;
+Wrong answer: No output due to compiler error. i is not declared or defined.
+Right answer: No output due to compiler error. Crash at evaluation of i as it is
+not defined.
+ ============================================================================
+ QUESTION 5: What is the output after applying Bit-Wise and?
+ 01011001 11001101 11101011 11100010
+ 00000000 00000000 00001111 00000000
+ Wrong answer: 1011
+               1111
+ Right answer: 00000000 00000000 00001011 00000000
+ ============================================================================

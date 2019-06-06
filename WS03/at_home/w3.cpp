@@ -10,18 +10,7 @@
 #include "LVPair.h"
 #include "List.h"
 
-
-
 using namespace sict;
-
-// Declared minFieldWidth as static
-template<typename L, typename V>
-size_t SummableLVPair<L, V>::minFieldWidth{ 0u };
-
-// Explicit specialization of LVList<std::string, std::string>
-template<> std::string SummableLVPair<std::string, std::string>::initial = "";
-// Explicit specialization of LVList<std::string, int>
-template<> int SummableLVPair<std::string, int>::initial = 0;
 
 int main(int argc, char* argv[]) {
 	std::cout << "Command Line : ";
@@ -42,8 +31,6 @@ int main(int argc, char* argv[]) {
 	// each LVPair consists of a label of type std::string and a value of type std::string
 	// the maximum number of elements in the list is 50
 	//
-	//LVList<SummableLVPair<std::string, std::string>, SummableLVPair<std::string, std::string>, 
-		//SummableLVPair<std::string, std::string>, 50> references;
 	LVList<SummableLVPair<std::string, std::string>, std::string, std::string, 50> references;
 	std::ifstream index(argv[1]);
 	if (!index) {

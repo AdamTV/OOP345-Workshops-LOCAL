@@ -19,22 +19,29 @@
   ============================================================================
  */
 namespace sict {
+
 	//Class template header
 	template <class T, int N>
+
 	//Class template body
 	class List {
+
 		//Class template variables
 		T list[N];
+
 		//Initialize listSize to 0 to start at beggining of array
 		size_t listSize = {0u};
 	public:
+
 		//Returns the current size of the array
 		size_t size() const {return listSize;}
+
 		//Subscript operator to make values in array accessible
 		const T& operator[](size_t i) const{
 			const T& t = list[i];
 			return t;
 		}
+
 		//Overloaded += operator to add an element to the array if there is room
 		void operator+=(const T& t){
 			if (listSize < N){
@@ -43,11 +50,14 @@ namespace sict {
 			}
 		}
 	};
+
 	//Class template header
 	template<typename T, typename L, typename V, int N>
+
 	//Class template body
 	class LVList : public List<T, N>{
 	public:
+
 		//Accumulate all of the values of all of the elements in the current object
 		V accumulate(const L& label) const {
 			// Initialize the accumulator to the initial value for objects of the label-value pair
