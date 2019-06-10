@@ -20,11 +20,15 @@
 #include "Message.h"
 
 namespace sict {
+
+	//Default constructor
 	Message::Message()
 	{
 		//Safe empty state
 		user = "Empty";
 	}
+
+	//Single argument constructor for parsing
 	Message::Message(const std::string& str)
 	{
 		if (str.length() > 0) {
@@ -32,6 +36,7 @@ namespace sict {
 			//Check for empty message
 			if (pos != std::string::npos) {
 				user = str.substr(0, pos);
+				//Check for optional reply field
 				if (str.find("@") != std::string::npos) {
 					pos += 2;
 					std::size_t pos2 = str.find(" ", pos);
@@ -45,19 +50,23 @@ namespace sict {
 			}
 		}
 		if (message.length() < 1 || str.length() < 1)
-			user = "Empty";
+			*this = Message();
 	}
+
+	//Function to determine safe empty state
 	bool Message::empty() const
 	{
 		return (user == "Empty") ? true : false;
 	}
+
+	//Method to display a message object
 	void Message::display(std::ostream& os) const
 	{
 		if (!empty()) {
-			os << "User  : " << user << std::endl;
+			os << ">User  : " << user << std::endl;
 			if(reply.length() > 0)
-			os << "Reply : " << reply << std::endl;
-			os << "Tweet : " << message << std::endl;
+			os << " Reply : " << reply << std::endl;
+			os << " Tweet : " << message << std::endl;
 		}
 	}
 }

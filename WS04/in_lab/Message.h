@@ -23,6 +23,8 @@
 #include <ostream>
 
 namespace sict {
+
+	//Message class to hold required properties and methods
 	class Message {
 		std::string user;
 		std::string reply;
