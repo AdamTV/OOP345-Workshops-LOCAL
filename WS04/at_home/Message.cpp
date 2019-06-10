@@ -13,13 +13,14 @@
 
  /*
   ============================================================================
-  Description : Message class decleration
+  Description : Message class deceleration
   ============================================================================
  */
 
 #include "Message.h"
 
-namespace sict {
+namespace sict 
+{
 
 	//Default constructor
 	Message::Message()
@@ -31,20 +32,24 @@ namespace sict {
 	//Single argument constructor for parsing
 	Message::Message(const std::string& str)
 	{
-		if (str.length() > 0) {
+		if (str.length() > 0) 
+		{
 			std::size_t pos = str.find(" ");
 			//Check for empty message
-			if (pos != std::string::npos) {
+			if (pos != std::string::npos) 
+			{
 				user = str.substr(0, pos);
 				//Check for optional reply field
-				if (str.find("@") != std::string::npos) {
+				if (str.find("@") != std::string::npos) 
+				{
 					pos += 2;
 					std::size_t pos2 = str.find(" ", pos);
 					std::size_t pos3 = pos2 - pos;
 					reply = str.substr(pos, pos3);
 					message = str.substr(pos2 + 1);
 				}
-				else {
+				else 
+				{
 					message = str.substr(pos + 1);
 				}
 			}
@@ -62,7 +67,8 @@ namespace sict {
 	//Method to display a message object
 	void Message::display(std::ostream& os) const
 	{
-		if (!empty()) {
+		if (!empty())
+		{
 			os << ">User  : " << user << std::endl;
 			if(reply.length() > 0)
 			os << " Reply : " << reply << std::endl;

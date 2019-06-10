@@ -15,23 +15,30 @@
 
  /*
   ============================================================================
-  Description : Notifications class decleration
+  Description : Notifications class deceleration
   ============================================================================
  */
 
 #include "Message.h"
 
-namespace sict {
-	//Notifications class to manage an aggregation of Messge objects
-	class Notifications {
+namespace sict 
+{
+
+	//Notifications class to manage an aggregation of Message objects
+	class Notifications 
+	{
 		const Message** notifications = nullptr;
 		int currentMax;
 		int currentSize;
 	public:
 		Notifications();
 		Notifications(int);
+		Notifications(const Notifications&);
+		// Move constructor
 		Notifications(Notifications&& src) noexcept { *this = std::move(src); }
-		Notifications& operator=(Notifications&& src);
+		~Notifications();
+		Notifications& operator=(Notifications&& src) noexcept;
+		Notifications& operator=(const Notifications& src);
 		Notifications& operator+=(const Message& msg);
 		Notifications& operator-=(const Message& msg);
 		void display(std::ostream& os) const;

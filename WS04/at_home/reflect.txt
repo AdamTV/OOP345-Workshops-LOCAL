@@ -1,0 +1,62 @@
+============================================================================
+Name        : reflect.txt
+Author      : Adam Stinziani
+Email       : astinziani@myseneca.ca
+Student #   : 124 521 188
+Course Code : OOP345
+Section     : SCC
+Date        : 2019-06-10
+Workshop    : Workshop 4 - Reflection
+============================================================================
+============================================================================
+What I have learned:
+============================================================================
+QUESTION 1: The difference between the implementations of a composition and an
+aggregation.
+ANSWER 1: A composition implements complete ownership of the composee from the
+composer. An aggregation is similar to a composition, but the aggregator is NOT
+responsible for the complete construction or destruction of the aggregatee,
+where the composer is in a composition. Aggregation is less coupled than
+composition. For example the implementations of the following functions:
+Notifications& operator+=(const Message& msg);
+Notifications& operator-=(const Message& msg);
+These functions exhibit the aggregative nature of the Notifications class
+by not handling the creation or destruction of the object the class uses.
+By manipulating only the addresses of the current object and it's parameter,
+these functions do create or destroy the aggregated object.
+============================================================================
+QUESTION 2: The difference between the implementations of move and copy
+functions in a composition and an aggregation.
+ANSWER 2: In theory, the copy constructor is the only one of the four move and
+copy functions that should be different in a composition and aggregation. This
+is because the copy constructor is the only function that creates a new object,
+while the copy-assignment operator, move constructor and move assignment
+operator all work with existing objects. For this lab, I noticed that the
+instructions specifically said to allocate dynamic memory for the aggregated
+constant Messages array of pointers. This is done in the following line of code:
+notifications = new (const Message * [max_n]);
+I feel that in working with a constant array of pointers, coupling is reduced in
+comparison to the MessagePack example where the array is not constant.
+============================================================================
+QUESTION 3: When should I use noexcept.
+ANSWER 3: I noticed the compiler recommended that I should declare the move
+functions of the Notifications and MessagePack classes as noexcept. After a bit
+of research, I found that noexcept introduces optimizations into your code by
+removing binaries to handle thrown exceptions. This doesn't make much of a
+difference with these small classes of code I am working with, but in much
+larger classes the optimizations could be much greater and for this reason
+always declare move functions as noexcept or any function you don't want to
+throw an exception for that matter.
+============================================================================
+QUESTION 4: Further clarification of composition and aggregation.
+ANSWER 4: From what I can understand in aggregations, if the object that uses
+an aggregated object gets destructed, the aggregated object does not
+necessarily get destroyed with it's user. I found it necessary to include a
+destructor in the Notifications class which was the aggregation because I
+allocated dynamic memory to the notifications identifier, I must deallocate this
+memory when the object goes out of scope. Unfortunately I feel this introduces
+coupling into the aggregation because it makes the Notifications class
+responsible for handling it's Message component.
+============================================================================
+Quiz Reflection : N/A
+============================================================================

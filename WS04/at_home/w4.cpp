@@ -95,7 +95,7 @@ int main(int argc, char* argv[]) {
 
 		std::cout << "Notification Contents\n" << "=====================\n";
 		std::cout << " No of Messages " << notifications.size() << std::endl;
-		std::cout << notifications << std::endl;
+ 		std::cout << notifications << std::endl;
 	}
 
 	// deallocate messages

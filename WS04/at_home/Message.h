@@ -15,17 +15,19 @@
 
  /*
   ============================================================================
-  Description : Message class decleration
+  Description : Message class deceleration
   ============================================================================
  */
 
 #include <string>
 #include <ostream>
 
-namespace sict {
+namespace sict 
+{
 
 	//Message class to hold required properties and methods
-	class Message {
+	class Message 
+	{
 		std::string user;
 		std::string reply;
 		std::string message;

@@ -15,24 +15,27 @@
 
  /*
   ============================================================================
-  Description : MessagePack class decleration
+  Description : MessagePack class deceleration
   ============================================================================
  */
 
 #include "Message.h"
 
-namespace sict {
+namespace sict
+{
 
 	//MessagePack class to hold composition of Message objects
-	class MessagePack {
+	class MessagePack
+	{
 		Message** messages = nullptr;
 		int currentSize;
 	public:
 		MessagePack();
 		MessagePack(Message**, int);
 		MessagePack(const MessagePack&);
+		// Move constructor
 		MessagePack(MessagePack&& src) noexcept { *this = std::move(src); }
-		MessagePack& operator=(MessagePack&& src);
+		MessagePack& operator=(MessagePack&& src)noexcept;
 		MessagePack& operator=(const MessagePack&);
 		~MessagePack();
 		void display(std::ostream& os) const;
