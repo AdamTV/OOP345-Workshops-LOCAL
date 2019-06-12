@@ -35,7 +35,7 @@ namespace sict
 	{
 		if (max_n > 0) 
 		{
-			notifications = new (const Message * [max_n]);
+			notifications = new const Message * [max_n];
 			currentMax = max_n;
 			currentSize = 0;
 		}
@@ -83,8 +83,8 @@ namespace sict
 			currentMax = src.currentMax;
 
 			delete[] notifications;
-			notifications = new (const Message * [src.size()]);
-			for (int i = 0; i < src.size(); i++)
+			notifications = new const Message * [src.size()];
+			for (size_t i = 0; i < src.size(); i++)
 			{
 				notifications[i] = src.notifications[i];
 			}
@@ -108,7 +108,7 @@ namespace sict
 	{
 		int foundAt;
 		bool found = false;
-		for (int i = 0; i < size() && !found; i++) 
+		for (size_t i = 0; i < size() && !found; i++) 
 		{
 			if (notifications[i] == &msg) 
 			{
@@ -120,7 +120,7 @@ namespace sict
 		}
 		if (found) 
 		{
-			for (int i = foundAt; i < (size() + 1); i++)
+			for (size_t i = foundAt; i < (size() + 1); i++)
 			{
 				notifications[i] = notifications[i + 1];
 			}
@@ -131,7 +131,7 @@ namespace sict
 	// Method to display contents of current object
 	void Notifications::display(std::ostream& os) const
 	{
-		for (int i = 0; i < size(); i++) 
+		for (size_t i = 0; i < size(); i++) 
 		{
 			if(notifications[i] != nullptr)
 			notifications[i]->display(os);

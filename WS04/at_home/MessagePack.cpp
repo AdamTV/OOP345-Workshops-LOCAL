@@ -81,7 +81,7 @@ namespace sict
 			delete[] messages;
 			messages = new Message * [src.size()];
 
-			for (int i = 0; i < src.size(); i++) 
+			for (size_t i = 0; i < src.size(); i++) 
 				messages[i] = src.messages[i];
 			
 			currentSize = src.currentSize;
@@ -106,7 +106,7 @@ namespace sict
 	// Method to display current object
 	void MessagePack::display(std::ostream& os) const
 	{
-		for (int i = 0; i < size(); i++) 
+		for (size_t i = 0; i < size(); i++) 
 		{
 			messages[i]->display(os);
 		}
