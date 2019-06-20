@@ -23,6 +23,7 @@
 
 namespace sict {
 
+	// constructor to create sequence of iProduct objects
 	Sale::Sale(char* name)
 	{
 		std::ifstream file(name);
@@ -36,15 +37,16 @@ namespace sict {
 		}
 	}
 
+	// display created list to any ostream
 	void Sale::display(std::ostream& os) const
 	{
-		std::vector<int>v(products.size());
+		std::vector<int>v(products.size()-1);
 		double totalPrice = 0;
 		int ii = 0;
 		// range-based for
 		for (auto i : v) {
 			os << *products[ii];
-			totalPrice += products[i]->price();
+			totalPrice += products[ii]->price();
 			ii++;
 		}
 		os << std::setw(FW) << "Total" << std::setw(FW) << totalPrice;

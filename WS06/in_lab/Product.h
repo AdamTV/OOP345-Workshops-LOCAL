@@ -22,7 +22,7 @@
 #include "iProduct.h"
 namespace sict {
 	class Product : public iProduct {
-		int fieldWidth = FW;
+	
 		int currentNumber;
 		double currentPrice;
 	public:

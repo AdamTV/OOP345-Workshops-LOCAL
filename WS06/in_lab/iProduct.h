@@ -19,6 +19,8 @@
   ============================================================================
  */
 #include <iostream>
+
+// include external variable from w6.cpp for iProduct and any file including "iProduct.h"
 extern int FW;
 
 namespace sict {

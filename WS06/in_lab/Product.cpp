@@ -20,21 +20,30 @@
 #include"Product.h"
 
 namespace sict {
+
+	// constructor to initialize data members
 	Product::Product(int num, double price) :currentNumber(num), currentPrice(price) {}
 
+	// query to get price of current object
 	double Product::price() const
 	{
 		 return currentPrice;
 	}
+
+	// query to display current object to any ostream
 	void Product::display(std::ostream& os) const
 	{
-		os << std::setw(FW) << currentNumber << std::setw(FW) << currentPrice << std::endl;
+		os << std::setw(FW) << currentNumber << std::setw(FW) << std::fixed << std::setprecision(2) << currentPrice << std::endl;
 	}
+
+	// extraction operator to use on iProduct object
 	std::ostream& operator<<(std::ostream& os, const iProduct& p)
 	{
 		p.display(os);
 		return os;
 	}
+
+	// allocate memory for Product instance and return address 
 	iProduct* readRecord(std::ifstream& file)
 	{
 		iProduct* product = nullptr;
