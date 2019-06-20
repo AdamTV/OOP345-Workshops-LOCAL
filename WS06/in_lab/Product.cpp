@@ -28,7 +28,7 @@ namespace sict {
 	}
 	void Product::display(std::ostream& os) const
 	{
-		os << std::setw(FW) << currentNumber << std::setw(FW) << currentPrice;
+		os << std::setw(FW) << currentNumber << std::setw(FW) << currentPrice << std::endl;
 	}
 	std::ostream& operator<<(std::ostream& os, const iProduct& p)
 	{

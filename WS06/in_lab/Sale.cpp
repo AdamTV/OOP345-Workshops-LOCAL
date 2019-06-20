@@ -1,8 +1,6 @@
-#ifndef SICT_SALE_H
-#define SICT_SALE_H
 /*
  ============================================================================
- Name        : Sale.h
+ Name        : Sale.cpp
  Author      : Adam Stinziani
  Email       : astinziani@myseneca.ca
  Student #   : 124 521 188
@@ -16,18 +14,39 @@
  /*
   ============================================================================
   Description : Sale module for managing a sequence of iProduct objects.
-				Deceleration.
+				Definition.
   ============================================================================
  */
-#include <vector>
-#include "iProduct.h"
+#include <fstream>
+#include <iomanip>
+#include "Sale.h"
 
 namespace sict {
-	class Sale {
-	std::vector<iProduct*> products;
-	public:
-		Sale(char* name);
-		void display(std::ostream& os)const;
-	};
+
+	Sale::Sale(char* name)
+	{
+		std::ifstream file(name);
+		if (file) {
+			while (file) {
+				products.push_back(readRecord(file));
+			}
+		}
+		else {
+			throw "Failed to open file";
+		}
+	}
+
+	void Sale::display(std::ostream& os) const
+	{
+		std::vector<int>v(products.size());
+		double totalPrice = 0;
+		int ii = 0;
+		// range-based for
+		for (auto i : v) {
+			os << *products[ii];
+			totalPrice += products[i]->price();
+			ii++;
+		}
+		os << std::setw(FW) << "Total" << std::setw(FW) << totalPrice;
+	}
 }
-#endif // !SICT_SALE_H

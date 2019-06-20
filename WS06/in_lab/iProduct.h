@@ -19,9 +19,9 @@
   ============================================================================
  */
 #include <iostream>
+extern int FW;
 
 namespace sict {
-	extern int FW;
 	class iProduct {
 	public:
 		virtual double price() const = 0;

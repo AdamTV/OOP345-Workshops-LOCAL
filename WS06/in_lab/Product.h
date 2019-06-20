@@ -15,7 +15,7 @@
 
  /*
   ============================================================================
-  Description : Product inheritance hierarchy concrete class decleration
+  Description : Product inheritance hierarchy concrete class deceleration
   ============================================================================
  */
 #include <iomanip>
