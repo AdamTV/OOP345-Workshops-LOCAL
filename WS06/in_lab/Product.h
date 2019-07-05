@@ -18,11 +18,13 @@
   Description : Product inheritance hierarchy concrete class deceleration
   ============================================================================
  */
+
 #include <iomanip>
 #include "iProduct.h"
+
 namespace sict {
+
 	class Product : public iProduct {
-	
 		int currentNumber;
 		double currentPrice;
 	public:
@@ -30,7 +32,10 @@ namespace sict {
 		double price() const;
 		void display(std::ostream& os)const;
 	};
+
 	std::ostream& operator<<(std::ostream& os, const iProduct& p);
 	iProduct* readRecord(std::ifstream& file);
+
 }
+
 #endif // !SICT_PRODUCT_H

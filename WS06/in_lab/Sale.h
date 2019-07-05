@@ -23,11 +23,14 @@
 #include "iProduct.h"
 
 namespace sict {
+
 	class Sale {
 	std::vector<iProduct*> products;
 	public:
 		Sale(char* name);
 		void display(std::ostream& os)const;
 	};
+
 }
+
 #endif // !SICT_SALE_H
