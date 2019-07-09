@@ -1,0 +1,109 @@
+===============================================================================
+Name        : reflect.txt
+Author      : Adam Stinziani
+Email       : astinziani@myseneca.ca
+Student #   : 124 521 188
+Course Code : OOP345
+Section     : SCC
+Date        : 2019-07-09
+Workshop    : Workshop 6 - Reflection
+===============================================================================
+===============================================================================
+What I have learned:
+===============================================================================
+QUESTION 1: The reason for using the vector container rather than any other
+available in STL?
+ANSWER 1: We used the vector container in this workshop because it is the
+simplest of the containers of variable size. We require the simplest of
+containers because we are only using one function from the STL - push_back(...)
+eg.
+  products.push_back(readRecord(file));
+We require a container of variable size versus a container of fixed size
+because we are adding an unknown or variable size of elements to the container.
+As implemented by the while loop:
+while (file) {
+  products.push_back(readRecord(file));
+}
+===============================================================================
+QUESTION 2: Why there is no need to deallocate the dynamically allocated
+memory in your own code?
+ANSWER 2: There is no need to deallocate the dynamically allocated memory in
+my code because the memory I have dynamically allocated is part of the storage
+of a vector container which is handled automatically by the STL. The vector
+container is located in the Sale module eg.
+	std::vector<iProduct*> products;
+The readRecord function will return a pointer to a dynamically allocated
+polymorphic object and the push_back function will add it to the back of the
+products array. When the products array goes out of scope the STL will
+automatically deallocate any memory allocated within the products array eg.
+	products.push_back(readRecord(file));
+===============================================================================
+QUESTION 3: How the range-based for simplifies coding in this case?
+ANSWER 3: The range-based for loop is "used as a more readable equivalent to
+the traditional for loop operating over ... all elements in a container"
+Source: https://en.cppreference.com/w/cpp/language/range-for
+The range based for serves it's purpose in this lab as we wish to iterate over
+all of the elements in our vector container that was created. Eg.
+for (auto i : products) {
+...
+}
+Instead of the more complicated traditional for loop syntax with an
+initialization, condition, and change we only need a range declaration (i) and
+a range expression (products). Instead of accessing elements of the container
+through the iterator eg. products[i], the iterator (i) becomes the elements of
+the container and that's what we use to access it's elements.
+===============================================================================
+QUESTION 4: How to check for the optional tax status character at the end of
+each record in Sales.dat?
+ANSWER 4: Working with input and output streams can only get eternally easier,
+as I seem to find each semester. The algorithm library (#include <algorithm>)
+Has a member function std::count(...) which I found most useful when I noticed
+records with taxable items had 2 spaces instead of 1. This was stored in spaces.
+			size_t spaces = std::count(s.begin(), s.end(), ' ');
+The string to integer (stoi) and string to decimal (stod) function of the string
+library were also most useful.
+===============================================================================
+Quiz Reflection
+===============================================================================
+QUESTION 2: Make a statement to create a function object named foo by binding
+the function named add to the arguments 10 and 20:
+WRONG ANSWER : N/A
+RIGHT ANSWER : auto foo = std::bind(add, 10, 20);
+===============================================================================
+QUESTION 3: The iterators of the standard template library divide into six
+categories. Name two of them:
+WRONG ANSWER : N/A
+RIGHT ANSWER : InputIterator, OutputIterator, ForwardIterator,
+BiDirectionalIterator, RandomAccessIterator, ContiguousIterator
+===============================================================================
+QUESTION 4: The _________ function templates of the STL perform
+programmer-specific operations on the elements of a sequential container.
+WRONG ANSWER : N/A
+RIGHT ANSWER : transform
+===============================================================================
+QUESTION 5: Complete the statement that sums the elements of array a and
+returns the result:
+WRONG ANSWER : N/A
+RIGHT ANSWER : int result = std::accumulate(a.begin(),a.end());
+===============================================================================
+QUESTION 6:Write a program that reads the first 10 bytes from a binary file
+named file and displays them on standard output:
+WRONG ANSWER : N/A
+RIGHT ANSWER :
+#include <iostream>
+#include <fstream>
+int main() {
+    std::ifstream fn;
+    fn.open(“file”, std::ios::in|std::ios::binary);
+    if(fn){
+        char c[10];
+        fn.read(c,10);
+        c[10] = ‘/n’;
+        std::cout << c << std::endl;
+    }
+}
+===============================================================================
+===============================================================================
+===============================================================================
+===============================================================================
+===============================================================================
