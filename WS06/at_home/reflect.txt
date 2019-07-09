@@ -60,10 +60,15 @@ as I seem to find each semester. The algorithm library (#include <algorithm>)
 Has a member function std::count(...) which I found most useful when I noticed
 records with taxable items had 2 spaces instead of 1. This was stored in spaces.
 			size_t spaces = std::count(s.begin(), s.end(), ' ');
-The string to integer (stoi) and string to decimal (stod) function of the string
+The string to integer (stoi) and string to double (stod) function of the string
 library were also most useful.
 ===============================================================================
 Quiz Reflection
+===============================================================================
+QUESTION 1: The algorithms category of the STL consists of the following three
+libraries:
+WRONG ANSWER : N/A
+RIGHT ANSWER : functional, algorithm, numeric
 ===============================================================================
 QUESTION 2: Make a statement to create a function object named foo by binding
 the function named add to the arguments 10 and 20:
