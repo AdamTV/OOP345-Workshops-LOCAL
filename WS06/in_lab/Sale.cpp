@@ -42,7 +42,7 @@ namespace sict {
 	//
 	void Sale::display(std::ostream& os) const
 	{
-		os << std::setw(FW) << "Product No" << std::setw(FW) << "Cost\n";
+		os << std::setw(FW) << "\nProduct No" << " " << std::setw(FW) << "Cost\n";
 		double totalPrice = 0;
 		// range-based for
 		for (auto i : products) {
