@@ -59,8 +59,9 @@ namespace sict {
 			std::vector<T> y;
 			for (auto y_n : xy)
 				y.push_back(y_n.second);
-			std::sort(y.begin(), y.end());
-			median = y[y.size() / 2];
+			std::vector<T> y_temp(y);
+			std::sort(y_temp.begin(), y_temp.end());
+			median = y_temp[y_temp.size() / 2];
 
 			// calculate slope
 			std::vector<T> x;
@@ -68,15 +69,17 @@ namespace sict {
 				x.push_back(x_n.first);
 			T ex = std::accumulate(x.begin(), x.end(), T(0));
 			T ey = std::accumulate(y.begin(), y.end(), T(0));
-			std::vector<T> sum;// ISNT RIGHT
+			std::vector<T> product;
 			for (size_t i = 0; i < xy.size(); i++)
-				sum.push_back(x[i] * y[i]);
-			T exy = std::accumulate(sum.begin(), sum.end(), T(0)); //ISNT RIGHT
+				product.push_back(x[i] * y[i]);
+			T exy = std::accumulate(product.begin(), product.end(), T(0));
 			std::vector<T> x2;
 			std::for_each(x.begin(), x.end(),
 				[&](T x) { x2.push_back(x * x); });
 				T ex2 = std::accumulate(x2.begin(),x2.end(), T(0));
 				slope = (xy.size() * exy - ex * ey) / (xy.size() * ex2 - ex * ex);
+
+				yIntercept = (ey - slope*ex) / xy.size();
 
 		}
 
@@ -135,8 +138,10 @@ namespace sict {
 				<< "\nStatistics\n----------\n"
 				<< std::setw(FW) << "y mean" << "    = " << std::setw(FW) << mean() << "\n "
 				<< std::setw(FW) << "y sigma" << "   = " << std::setw(FW) << sigma() << "\n  "
-				<< std::setw(FW) << "y median" << "  = " << std::setw(FW) << median << std::endl
-				<< std::setw(FW) << "slope " << "    = " << std::setw(FW) << slope << std::endl;
+				<< std::setw(FW) << "y median" << "  = " << std::setw(FW) << median << "\n"
+				<< std::setw(FW) << "slope " << "    = " << std::setw(FW) << slope << "\n  "
+				<< std::setw(FW) << "intercept" << " = " << std::setw(FW) << yIntercept << std::endl;
+
 
 
 		}
