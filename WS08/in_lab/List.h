@@ -34,9 +34,9 @@ namespace sict {
 
 		// TODO: Overload the += operator with a raw pointer
 		//       as a second operand.
-
-
-
+		void operator+=(T* ls) {
+			list.push_back(*ls);
+		}
 
 		void display(std::ostream& os) const {
             os << std::fixed << std::setprecision(2);
