@@ -27,6 +27,7 @@
 #include <numeric>
 #include <algorithm>
 #include <math.h>
+#include <functional>
 
 extern int FW, ND;
 
@@ -60,6 +61,7 @@ namespace sict {
 			for (auto y_n : xy)
 				y.push_back(y_n.second);
 			std::vector<T> y_temp(y);
+			// use algorithm library to sort data values
 			std::sort(y_temp.begin(), y_temp.end());
 			median = y_temp[y_temp.size() / 2];
 
@@ -75,6 +77,7 @@ namespace sict {
 			T exy = std::accumulate(product.begin(), product.end(), T(0));
 			std::vector<T> x2;
 			std::for_each(x.begin(), x.end(),
+				// use lambda to specify operation on each value in set
 				[&](T x) { x2.push_back(x * x); });
 				T ex2 = std::accumulate(x2.begin(),x2.end(), T(0));
 				slope = (xy.size() * exy - ex * ey) / (xy.size() * ex2 - ex * ex);
@@ -95,20 +98,25 @@ namespace sict {
 			}
 		}
 
-		// query to calculate mean of data
+		// functor to calculate mean of data
 		//
-		T mean() const {
-			T yMean = 0;
+		struct Mean {
+			T operator()(std::vector<std::pair<T,T>> xy) {
+				T yMean = 0;
 
-			// use algorithm library to sort data values
-			std::for_each(xy.begin(), xy.end(),
+				// use algorithm library
+				std::for_each(xy.begin(), xy.end(),
 
-				// use lambda to specify operation on each value in set
-				[&](std::pair<T, T> y_n) { yMean += y_n.second; });
+					// use lambda to specify operation on each value in set
+					[&](std::pair<T, T> y_n) { yMean += y_n.second; });
 
-			yMean /= xy.size();
-			return yMean;
-		}
+				yMean /= xy.size();
+				return yMean;
+			}
+		};
+
+		// create function object out of Mean functor
+		std::function<T(std::vector<std::pair<T, T>>)> mean = Mean();
 
 		// query to calculate standard deviation
 		//
@@ -116,12 +124,13 @@ namespace sict {
 			T diffMean, ySigma;
 			std::vector<T> subMeanSq;
 
-			// use algorithm library to sort data values
+			// use algorithm library
 			std::for_each(xy.begin(), xy.end(),
 
 				// use lambda to specify operation on each value in set
 				[&](std::pair<T, T> y_n) {
-					subMeanSq.push_back((y_n.second - mean()) * (y_n.second - mean()));
+					subMeanSq.push_back((y_n.second - mean(xy)) 
+						* (y_n.second - mean(xy)));
 				});
 
 			// use numeric library to accumulate data values
@@ -136,14 +145,11 @@ namespace sict {
 		void displayStatistics(std::ostream& os) const {
 			os << std::setprecision(ND) << std::fixed
 				<< "\nStatistics\n----------\n"
-				<< std::setw(FW) << "y mean" << "    = " << std::setw(FW) << mean() << "\n "
+				<< std::setw(FW) << "y mean" << "    = " << std::setw(FW) << mean(xy) << "\n "
 				<< std::setw(FW) << "y sigma" << "   = " << std::setw(FW) << sigma() << "\n  "
 				<< std::setw(FW) << "y median" << "  = " << std::setw(FW) << median << "\n"
 				<< std::setw(FW) << "slope " << "    = " << std::setw(FW) << slope << "\n  "
 				<< std::setw(FW) << "intercept" << " = " << std::setw(FW) << yIntercept << std::endl;
-
-
-
 		}
 
 	};

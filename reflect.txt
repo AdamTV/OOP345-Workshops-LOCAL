@@ -1,12 +1,13 @@
 ============================================================================
-Name        : reflect.txt
-Author      : Adam Stinziani
-Email       : astinziani@myseneca.ca
-Student #   : 124 521 188
-Course Code : OOP345
-Section     : SCC
-Date        : 2019-06-06
-Workshop    : Workshop - Reflection
+Name         : reflect.txt
+Author       : Adam Stinziani
+Email        : astinziani@myseneca.ca
+Student #    : 124 521 188
+Course Code  : OOP345
+Section      : SCC
+Date Created : 2019-07-16
+Last Edited  : 2019-07-16
+Workshop     : Workshop 7 - Reflection
 ============================================================================
 ============================================================================
 What I have learned:
