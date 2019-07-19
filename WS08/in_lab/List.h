@@ -5,6 +5,9 @@
 // Chris Szalwinski from Cornel Barna
 // 2019/03/17
 
+// Completed by: Adam Stinziani
+// 2019-07-18
+
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -18,7 +21,13 @@ namespace sict {
     class List {
 		std::vector<T> list;
 	public:
+		
+		// default constructor
+		//
 		List() { }
+		
+		// custom constructor
+		//
 		List(const char* fn) {
 			std::ifstream file(fn);
 			if (!file)
@@ -29,15 +38,23 @@ namespace sict {
                     list.push_back(*new T(e));
             }
 		}
+		
+		// get size of list
+		//
 		size_t size() const { return list.size(); }
+		
+		// subscript operator for list class
+		//
 		const T& operator[](size_t i) const { return list[i]; }
-
-		// TODO: Overload the += operator with a raw pointer
-		//       as a second operand.
+		
+		// += operator to add to list
+		//
 		void operator+=(T* ls) {
 			list.push_back(*ls);
 		}
-
+		
+		// display list object to any os
+		// 
 		void display(std::ostream& os) const {
             os << std::fixed << std::setprecision(2);
             for (auto& e : list)
@@ -45,6 +62,8 @@ namespace sict {
         }
 	};
 
+	// display list object to any os
+	//
     template<typename T>
     std::ostream& operator<<(std::ostream& os, const List<T>& l) {
 		l.display(os);
