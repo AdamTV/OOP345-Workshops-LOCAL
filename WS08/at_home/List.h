@@ -5,6 +5,9 @@
 // Chris Szalwinski from Cornel Barna
 // 2019/03/17
 
+// Completed by: Adam Stinziani
+// 2019-07-18
+
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -14,46 +17,61 @@
 #include <fstream>
 
 namespace sict {
-    template <typename T>
-    class List {
+	template <typename T>
+	class List {
 		std::vector<T> list;
 	public:
+
+		// default constructor
+		//
 		List() { }
+
+		// custom constructor
+		//
 		List(const char* fn) {
 			std::ifstream file(fn);
 			if (!file)
 				throw std::string("*** Failed to open file ") + std::string(fn) + std::string(" ***");
-            while (file) {
-                T e;
-                if (e.load(file))
-                    list.push_back(*new T(e));
-            }
+			while (file) {
+				T e;
+				if (e.load(file))
+					list.push_back(*new T(e));
+			}
 		}
+
+		// get size of list
+		//
 		size_t size() const { return list.size(); }
+
+		// subscript operator for list class
+		//
 		const T& operator[](size_t i) const { return list[i]; }
 
-		// TODO: Overload the += operator with a smart pointer
-		//       as a second operand.
+		// += operator to add to list for smart pointer
+		//
+		void operator+=(std::unique_ptr<T> ls) {
+			list.push_back(*ls);
+		}
 
+		// += operator to add to list for raw pointer
+		//
+		void operator+=(T* ls) {
+			list.push_back(*ls);
+		}
 
-
-
-		// TODO: Overload the += operator with a raw pointer
-		//       as a second operand.
-
-
-
-
-
+		// display list object to any os
+		// 
 		void display(std::ostream& os) const {
-            os << std::fixed << std::setprecision(2);
-            for (auto& e : list)
-                e.display(os);
-        }
+			os << std::fixed << std::setprecision(2);
+			for (auto& e : list)
+				e.display(os);
+		}
 	};
 
-    template<typename T>
-    std::ostream& operator<<(std::ostream& os, const List<T>& l) {
+	// display list object to any os
+	//
+	template<typename T>
+	std::ostream& operator<<(std::ostream& os, const List<T>& l) {
 		l.display(os);
 		return os;
 	}

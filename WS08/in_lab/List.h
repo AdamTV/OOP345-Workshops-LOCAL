@@ -46,8 +46,11 @@ namespace sict {
 		// subscript operator for list class
 		//
 		const T& operator[](size_t i) const { return list[i]; }
+
+		// TODO: Overload the += operator with a smart pointer
+		//       as a second operand.
 		
-		// += operator to add to list
+		// += operator to add to list for raw pointer
 		//
 		void operator+=(T* ls) {
 			list.push_back(*ls);
