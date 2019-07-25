@@ -3,6 +3,10 @@
 // Chris Szalwinski after Cornel Barna
 // 2019/03/19
 
+// Secure Data module to process and encrypt data
+// Completed by: Adam Stinziani
+// 2019-07-24
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -14,11 +18,15 @@ using namespace std;
 
 namespace sict {
 
+	// coverts data to encrypted version
+	//
 	void converter(char* t, char key, int n, const Cryptor& c) {
 		for (int i = 0; i < n; i++)
 			t[i] = c(t[i], key);
 	}
 
+	// custom constructor to set data values
+	//
 	SecureData::SecureData(const char* file, char key, ostream* pOfs) {
 		ofs = pOfs;
 
@@ -49,10 +57,14 @@ namespace sict {
 		*ofs << "Data encrypted in memory\n";
 	}
 
+	// destructor to clean up memory
+	//
 	SecureData::~SecureData() {
 		delete[] text;
 	}
 
+	// method to display data if valid
+	//
 	void SecureData::display(std::ostream& os) const {
 		if (text && !encoded)
 			os << text << std::endl;
@@ -62,11 +74,15 @@ namespace sict {
 			throw std::string("\n***No data stored***\n");
 	}
 
+	// method to encode data via encryption
+	//
 	void SecureData::code(char key) {
 		converter(text, key, nbytes, Cryptor());
 		encoded = !encoded;
 	}
 
+	// method to backup encrypted data
+	//
 	void SecureData::backup(const char* file) {
 		if (!text)
 			throw std::string("\n***No data stored***\n");
@@ -75,7 +91,7 @@ namespace sict {
 		else
 		{
 			// open a binary file for writing
-			std::ofstream f(file, std::ios::out | std::ios::binary | std::ios::trunc);
+			std::ofstream f(file, std::ios::out | std::ios::binary);
 
 			// write data into the binary file
 			//         and close the file
@@ -84,6 +100,8 @@ namespace sict {
 		}
 	}
 
+	// method to restore encrypted data
+	//
 	void SecureData::restore(const char* file, char key) {
 
 		// open binary file for reading
@@ -108,6 +126,8 @@ namespace sict {
 		*ofs << "Data decrypted in memory\n\n";
 	}
 
+	// method to display data if valid
+	//
 	std::ostream& operator<<(std::ostream& os, const SecureData& sd) {
 		sd.display(os);
 		return os;
