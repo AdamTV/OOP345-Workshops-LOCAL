@@ -77,18 +77,17 @@ namespace sict {
 			// TODO: open a binary file for writing
 			std::ofstream f(file, std::ios::out | std::ios::binary | std::ios::trunc);
 
-
 			// TODO: write data into the binary file
 			//         and close the file
-			f.write(text, sizeof text - 1);
+			f.write(text, int(nbytes - 1));
 			f.close();
 		}
 	}
 
 	void SecureData::restore(const char* file, char key) {
 
-		char str[1025];
-		char* p = str;
+		//char str[1025];
+		//char* p = str;
 
 		// TODO: open binary file for reading
 		std::ifstream input(file, std::ios::in | std::ios::binary);
