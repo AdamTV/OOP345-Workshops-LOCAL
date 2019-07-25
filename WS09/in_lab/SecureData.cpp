@@ -90,12 +90,10 @@ namespace sict {
 		std::ifstream input(file, std::ios::in | std::ios::binary);
 
 		// allocate memory here for the file content
-		input.seekg(0, std::ios::end);
-		nbytes = (int)input.tellg();
 		text = new char[nbytes];
 
 		// read the content of the binary file
-		input.seekg(ios::beg);
+		//         and close the file
 		input.read(text, nbytes);
 		input.close();
 
