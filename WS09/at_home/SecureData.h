@@ -6,6 +6,8 @@
 #ifndef SICT_SECUREDATA_H
 #define SICT_SECUREDATA_H
 
+#include <thread>
+#include <vector>
 #include <iostream>
 
 namespace sict
@@ -17,6 +19,7 @@ namespace sict
 	void converter(char*, char, int, const Cryptor&);
 
 	class SecureData {
+		std::vector<std::thread> threads;
 		char* text;
 		std::ostream* ofs;
 		int nbytes;
