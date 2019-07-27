@@ -1,0 +1,101 @@
+============================================================================
+Name         : reflect.txt
+Author       : Adam Stinziani
+Email        : astinziani@myseneca.ca
+Student #    : 124 521 188
+Course Code  : OOP345
+Section      : SCC
+Date Created : 2019-07-27
+Last Edited  : 2019-07-27
+Workshop     : Workshop 9 - Reflection
+============================================================================
+============================================================================
+What I have learned:
+============================================================================
+QUESTION 1: Avoiding nondeterminism with multi-threading in this workshop.
+ANSWER 1: While working on the at home portion of this workshop I initially
+had just created a vector of threads in the SecureData class, pushed the
+converter function to the vector of threads and joined all of the threads
+in the SecureData destructor. This was not enough as the data must be
+decoded before displaying, which resulted in the data displaying about 1
+times out of 10. With help from the thread and chrono library I was able to
+ensure a more predictable execution:
+
+// -> make sure converter thread executes before trying to display
+std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+The converter function only needed a 10 milliseconds head start! That must
+be years in computer time...
+============================================================================
+QUESTION 2: Binding a function to it's arguments.
+ANSWER 2: I have learned that binding a function to it's arguments lets us
+pass a function as an argument in a way that is not possible with an
+orthodox function call. For example the following code:
+
+threads.push_back(std::thread(converter(text, key, nbytes, Cryptor())));
+
+Produces an error because the above code is essentially trying to pass the
+void type to the std::thread() constructor. To solve this, we must bind the
+converter function to its arguments:
+
+threads.push_back(std::thread(std::bind(converter, text, key, nbytes,
+Cryptor())));
+============================================================================
+QUESTION 3: Binary file operations
+ANSWER 3: I have learned that binary file operations seem more secure, and
+accurate that text file operations. I think binary file operations are more
+secure because the contents of a binary file are typically indecipherable
+when viewed with a text editor which is how humans understand text meaning
+only the computer can truly understand the contents of a binary file. Binary
+written files also depend on the application that wrote them to process the
+data, making it hard to replicate any processes from external applications.
+For example the end of my encoded.dat file contains: ��������������
+That along with the rest of the contents of the file are meaningless to me,
+and only the workshop 9 application has the ability to make anything
+meaningful out of encoded.dat, very secure.
+
+I think that binary file operations are more accurate than text file
+operations because we can only read and write characters in binary mode,
+that is, one byte at a time! This increases precision that would otherwise
+be discarded by a languages formatting system.
+============================================================================
+Quiz Reflection
+============================================================================
+QUESTION 2: How do we avoid precedence errors in function-like macros?
+WRONG ANSWER 1: N/A
+RIGHT ANSWER 1: ((X) * (X)) Wrap arguments in parenthesis
+============================================================================
+QUESTION 6: 6.	Complete the following code focusing on the deallocation of
+the dynamically allocated 2-d array:
+WRONG ANSWER 6:
+int main(int argc, char* argv[]) {
+	int** a;
+	// memory allocation statements
+	// add coefficients
+	int sum = 0;
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			sum += a[i][j];
+	for (int i = 0; i < n; i++)
+    for(int j = 0; j < n; j++)
+		    delete[] a[i][j];
+	delete[] a;
+}
+RIGHT ANSWER 6:
+int main(int argc, char* argv[]) {
+	int** a;
+	// memory allocation statements
+	// add coefficients
+	int sum = 0;
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			sum += a[i][j];
+	for (int i = 0; i < n; i++)
+		delete[] a[i];
+	delete[] a;
+}
+============================================================================
+============================================================================
+============================================================================
+============================================================================
+============================================================================

@@ -5,12 +5,13 @@
 
 // Secure Data module to process and encrypt data
 // Completed by: Adam Stinziani
-// 2019-07-24
+// 2019-07-27
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <thread>
+#include <chrono>
 #include <functional>
 #include "SecureData.h"
 
@@ -61,6 +62,8 @@ namespace sict {
 	//
 	SecureData::~SecureData() {
 		delete[] text;
+		for (auto& thread : threads)
+			thread.join();
 	}
 
 	// method to display data if valid
@@ -77,8 +80,10 @@ namespace sict {
 	// method to encode data via encryption
 	//
 	void SecureData::code(char key) {
-		//threads.push_back(std::thread(converter(text, key, nbytes, Cryptor())));
-		converter(text, key, nbytes, Cryptor());
+		threads.push_back(std::thread(std::bind(converter, text, key, nbytes, Cryptor())));
+
+		// -> make sure converter thread executes before trying to display
+		std::this_thread::sleep_for(std::chrono::milliseconds(10)); 
 		encoded = !encoded;
 	}
 
